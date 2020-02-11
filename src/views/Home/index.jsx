@@ -2,7 +2,7 @@
 import React from 'react'
 import SvgIcon from '@/components/SvgIcon'
 import { inject, observer }  from 'mobx-react'
-import styles from './index.less'
+import './index.less'
 
 function Home(props) {
   const { demo } = props
@@ -11,7 +11,7 @@ function Home(props) {
       <p>Home</p>
       <p onClick={() => demo.changeTest('hello')}>{ demo.test }</p>
       <p onClick={() => demo.changeTest('world')}>{ demo.comTest }</p>
-      <SvgIcon iconClass="logo" className={styles['test-icon']} />
+      <SvgIcon iconClass="logo" styleName='test-icon' />
       { props.children }
     </div>
   )

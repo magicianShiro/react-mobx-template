@@ -5,10 +5,10 @@ const {
   addDecoratorsLegacy,
   fixBabelImports,
   addLessLoader,
+  addBabelPlugin,
 } = require('customize-cra')
 
 const rewireSvg = require('./config/svg')
-const rewireLess = require('./config/less-css-module')
 
 const AntDayjsWebpackPlugin = require('antd-dayjs-webpack-plugin')
 
@@ -32,12 +32,29 @@ module.exports = override(
     libraryDirectory: 'es',
     style: 'css',
   }),
-  // addLessLoader({
-  //   javascriptEnabled: true,
-  // }),
+  addLessLoader({
+    cssModules: {
+      localIdentName: "[local]--[hash:base64:5]",
+    },
+    cssLoaderOptions: {
+      modules: {
+        localIdentName: "[local]--[hash:base64:5]",
+      },
+    }
+    // javascriptEnabled: true,
+  }),
+  addBabelPlugin([
+    'react-css-modules', {
+      generateScopedName: '[local]--[hash:base64:5]',
+      filetypes: {
+        '.less': {
+          syntax: 'postcss-less'
+        }
+      },
+    }
+  ]),
   (config) => {
     rewireSvg(config)
-    rewireLess(config)
     return config
   }
 )
